@@ -1,0 +1,4 @@
+{
+  "voxy_renderdistance_fog.option.enabled": "Voxy Distance Fog",
+  "voxy_renderdistance_fog.option.enabled.tooltip": "Toggles the extra fog fade added for Voxy's render distance."
+}

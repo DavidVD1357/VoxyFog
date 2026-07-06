@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "dev.not_tim.voxyfog.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinFogRenderer",
+    "MixinVideoSettingsScreen"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

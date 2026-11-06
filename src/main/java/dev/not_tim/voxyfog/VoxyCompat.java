@@ -10,7 +10,6 @@ public final class VoxyCompat {
     private static Field configField;
     private static Field enabledField;
     private static Field renderingField;
-    private static Field environmentalFogField;
     private static Field sectionRenderDistanceField;
 
     private VoxyCompat() {
@@ -29,9 +28,8 @@ public final class VoxyCompat {
 
             boolean enabled = enabledField.getBoolean(config);
             boolean rendering = renderingField.getBoolean(config);
-            boolean environmentalFog = environmentalFogField.getBoolean(config);
             float sectionRenderDistance = sectionRenderDistanceField.getFloat(config);
-            return new State(true, enabled, rendering, environmentalFog, sectionRenderDistance);
+            return new State(true, enabled, rendering, sectionRenderDistance);
         } catch (ReflectiveOperationException ignored) {
             available = false;
             return State.unavailable();
@@ -49,7 +47,6 @@ public final class VoxyCompat {
             configField = configClass.getField("CONFIG");
             enabledField = configClass.getField("enabled");
             renderingField = configClass.getField("enableRendering");
-            environmentalFogField = configClass.getField("useEnvironmentalFog");
             sectionRenderDistanceField = configClass.getField("sectionRenderDistance");
             available = true;
         } catch (ReflectiveOperationException ignored) {
@@ -63,23 +60,21 @@ public final class VoxyCompat {
         final boolean present;
         final boolean enabled;
         final boolean renderingEnabled;
-        final boolean environmentalFogEnabled;
         final float sectionRenderDistance;
 
-        State(boolean present, boolean enabled, boolean renderingEnabled, boolean environmentalFogEnabled, float sectionRenderDistance) {
+        State(boolean present, boolean enabled, boolean renderingEnabled, float sectionRenderDistance) {
             this.present = present;
             this.enabled = enabled;
             this.renderingEnabled = renderingEnabled;
-            this.environmentalFogEnabled = environmentalFogEnabled;
             this.sectionRenderDistance = sectionRenderDistance;
         }
 
         static State unavailable() {
-            return new State(false, false, false, false, 0.0f);
+            return new State(false, false, false, 0.0f);
         }
 
         public boolean isActive() {
-            return VoxyFogConfig.isEnabled() && this.present && this.enabled && this.renderingEnabled && this.environmentalFogEnabled;
+            return VoxyFogConfig.isEnabled() && this.present && this.enabled && this.renderingEnabled;
         }
 
         public float renderDistanceBlocks() {
